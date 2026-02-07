@@ -1,0 +1,226 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String    @id @default(uuid())
+  email        String    @unique
+  username     String    @unique
+  passwordHash String    @map("password_hash")
+  role         String    @default("user")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+
+  decks         Deck[]
+  userDecks     UserDeck[]
+  results       Result[]
+  ratings       Rating[]
+  hints         Hint[]
+  comments      Comment[]
+  ownedGroups   Group[]        @relation("GroupOwner")
+  groupMembers  GroupMember[]
+
+  @@map("users")
+}
+
+model Deck {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  privacy     String   @default("private")
+  userId      String   @map("user_id")
+  quizCount   Int      @default(0) @map("quiz_count")
+  isPremium   Boolean  @default(false) @map("is_premium")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cards      Card[]
+  userDecks  UserDeck[]
+  tags       DeckTag[]
+  comments   Comment[]
+  groupDecks GroupDeck[]
+
+  @@index([userId])
+  @@index([privacy])
+  @@map("decks")
+}
+
+model Card {
+  id        String   @id @default(uuid())
+  deckId    String   @map("deck_id")
+  question  String   @db.Text
+  answer    String   @db.Text
+  cardOrder Int      @map("card_order")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  deck    Deck     @relation(fields: [deckId], references: [id], onDelete: Cascade)
+  results Result[]
+  ratings Rating[]
+  hints   Hint[]
+
+  @@index([deckId])
+  @@index([deckId, cardOrder])
+  @@map("cards")
+}
+
+model UserDeck {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  deckId    String   @map("deck_id")
+  type      String   @default("added")
+  quizCount Int      @default(0) @map("quiz_count")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  deck Deck @relation(fields: [deckId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, deckId])
+  @@index([userId])
+  @@map("user_decks")
+}
+
+model Result {
+  id             String   @id @default(uuid())
+  userId         String   @map("user_id")
+  cardId         String   @map("card_id")
+  lastGuess      Boolean  @map("last_guess")
+  totalCorrect   Int      @default(0) @map("total_correct")
+  totalIncorrect Int      @default(0) @map("total_incorrect")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  card Card @relation(fields: [cardId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, cardId])
+  @@index([userId, cardId])
+  @@map("results")
+}
+
+model Rating {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  cardId    String   @map("card_id")
+  rating    Int
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  card Card @relation(fields: [cardId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, cardId])
+  @@index([cardId])
+  @@map("ratings")
+}
+
+model Hint {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  cardId    String   @map("card_id")
+  hint      String   @db.Text
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  card Card @relation(fields: [cardId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, cardId])
+  @@index([userId, cardId])
+  @@map("hints")
+}
+
+model Tag {
+  id        String    @id @default(uuid())
+  name      String    @unique
+  createdAt DateTime  @default(now()) @map("created_at")
+
+  decks DeckTag[]
+
+  @@index([name])
+  @@map("tags")
+}
+
+model DeckTag {
+  id        String   @id @default(uuid())
+  deckId    String   @map("deck_id")
+  tagId     String   @map("tag_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  deck Deck @relation(fields: [deckId], references: [id], onDelete: Cascade)
+  tag  Tag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@unique([deckId, tagId])
+  @@index([deckId])
+  @@index([tagId])
+  @@map("deck_tags")
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  deckId    String   @map("deck_id")
+  userId    String   @map("user_id")
+  comment   String   @db.Text
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  deck Deck @relation(fields: [deckId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([deckId])
+  @@index([userId])
+  @@map("comments")
+}
+
+model Group {
+  id          String   @id @default(uuid())
+  name        String
+  description String?  @db.Text
+  ownerId     String   @map("owner_id")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  owner   User          @relation("GroupOwner", fields: [ownerId], references: [id], onDelete: Cascade)
+  members GroupMember[]
+  decks   GroupDeck[]
+
+  @@index([ownerId])
+  @@map("groups")
+}
+
+model GroupMember {
+  id        String   @id @default(uuid())
+  groupId   String   @map("group_id")
+  userId    String   @map("user_id")
+  role      String   @default("member")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  group Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([groupId, userId])
+  @@index([groupId])
+  @@index([userId])
+  @@map("group_members")
+}
+
+model GroupDeck {
+  id        String   @id @default(uuid())
+  groupId   String   @map("group_id")
+  deckId    String   @map("deck_id")
+  addedBy   String?  @map("added_by")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  group Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  deck  Deck  @relation(fields: [deckId], references: [id], onDelete: Cascade)
+
+  @@unique([groupId, deckId])
+  @@index([groupId])
+  @@map("group_decks")
+}
