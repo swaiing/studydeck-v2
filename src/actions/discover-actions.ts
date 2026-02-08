@@ -25,10 +25,6 @@ type AddToLibraryInput = z.infer<typeof addToLibrarySchema>
 export async function searchPublicDecks(data?: Partial<SearchDecksInput>) {
   try {
     const session = await auth()
-    if (!session?.user?.id) {
-      return { success: false, error: 'Unauthorized' }
-    }
-
     const validated = searchDecksSchema.parse(data)
 
     // Build where clause
@@ -99,22 +95,24 @@ export async function searchPublicDecks(data?: Partial<SearchDecksInput>) {
       skip: validated.offset,
     })
 
-    // Check which decks the user has added
-    const userDeckIds = await db.userDeck.findMany({
-      where: {
-        userId: session.user.id,
-        deckId: { in: decks.map((d) => d.id) },
-      },
-      select: { deckId: true },
-    })
-
-    const addedDeckIds = new Set(userDeckIds.map((ud) => ud.deckId))
+    // Check which decks the user has added (only if logged in)
+    let addedDeckIds = new Set<string>()
+    if (session?.user?.id) {
+      const userDeckIds = await db.userDeck.findMany({
+        where: {
+          userId: session.user.id,
+          deckId: { in: decks.map((d) => d.id) },
+        },
+        select: { deckId: true },
+      })
+      addedDeckIds = new Set(userDeckIds.map((ud) => ud.deckId))
+    }
 
     // Add isAdded flag to each deck
     const decksWithStatus = decks.map((deck) => ({
       ...deck,
-      isAdded: addedDeckIds.has(deck.id),
-      isOwner: deck.userId === session.user.id,
+      isAdded: session?.user?.id ? addedDeckIds.has(deck.id) : false,
+      isOwner: session?.user?.id ? deck.userId === session.user.id : false,
     }))
 
     // Get total count for pagination
