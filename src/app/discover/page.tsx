@@ -1,5 +1,4 @@
 import { auth } from "@/lib/auth"
-import { redirect } from "next/navigation"
 import { searchPublicDecks, getAllTags } from "@/actions/discover-actions"
 import { DiscoverSearch } from "@/components/discover/discover-search"
 import { DiscoverGrid } from "@/components/discover/discover-grid"
@@ -16,10 +15,7 @@ interface DiscoverPageProps {
 
 export default async function DiscoverPage({ searchParams }: DiscoverPageProps) {
   const session = await auth()
-
-  if (!session) {
-    redirect("/login")
-  }
+  const isLoggedIn = !!session
 
   const params = await searchParams
   const query = params.q || ''
@@ -85,7 +81,7 @@ export default async function DiscoverPage({ searchParams }: DiscoverPageProps) 
                 Showing {decks.length} of {total} deck{total !== 1 ? 's' : ''}
               </div>
             </div>
-            <DiscoverGrid decks={decks} />
+            <DiscoverGrid decks={decks} isLoggedIn={isLoggedIn} />
           </>
         )}
       </div>
