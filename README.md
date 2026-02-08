@@ -118,18 +118,32 @@ studydeck-v2/
 
 See [docs/MVP_PLAN.md](./docs/MVP_PLAN.md) for the full development plan.
 
-### Current Phase: Foundation
+### Current Phase: MVP Complete! 🎉
 - [x] Project setup
 - [x] Database schema
-- [ ] Authentication implementation
-- [ ] Basic layout and navigation
+- [x] Authentication implementation (NextAuth v5)
+- [x] Basic layout and navigation
+- [x] Deck CRUD operations
+- [x] Card management
+- [x] My Decks page
+- [x] Study interface with flip animations
+- [x] Progress tracking and answer recording
+- [x] Difficulty ratings (1-5 stars)
+- [x] Personal hints for cards
+- [x] Keyboard shortcuts
+- [x] Study session stats and results
+- [x] Discover page with public decks
+- [x] Search and filter functionality
+- [x] Add deck to library
+- [x] Deck comments system
+- [x] Tag filtering and browsing
+- [x] Groups (create, manage, share decks)
+- [x] Member management (add, remove)
 
-### Next Phases
-1. Core Deck Features (Week 2)
-2. Study Interface (Week 3)
-3. Discovery & Social (Week 4)
-4. Groups (Week 5)
-5. Polish & Deploy (Week 6)
+### Next Phase
+- Polish & Deploy (Week 6)
+2. Groups (Week 5)
+3. Polish & Deploy (Week 6)
 
 ## Available Scripts
 

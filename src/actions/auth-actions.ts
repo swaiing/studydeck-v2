@@ -53,7 +53,7 @@ export async function signup(formData: FormData) {
     return { success: true, userId: user.id }
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return { error: error.errors[0].message }
+      return { error: error.issues[0]?.message || "Validation error" }
     }
     console.error("Signup error:", error)
     return { error: "An error occurred during signup" }
