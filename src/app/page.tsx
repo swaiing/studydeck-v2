@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { auth } from "@/lib/auth";
 import {
   BookOpen,
   Brain,
@@ -8,7 +10,12 @@ import {
   ArrowRight
 } from "lucide-react";
 
-export default function Home() {
+export default async function Home() {
+  // Redirect to dashboard if already logged in
+  const session = await auth();
+  if (session) {
+    redirect("/dashboard");
+  }
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
       {/* Header */}

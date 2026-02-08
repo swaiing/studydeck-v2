@@ -1,8 +1,7 @@
 import { auth } from "@/lib/auth"
 import { redirect } from "next/navigation"
 import Link from "next/link"
-import { BookOpen, LogOut } from "lucide-react"
-import { signOut } from "@/lib/auth"
+import { BookOpen } from "lucide-react"
 
 export default async function DashboardPage() {
   const session = await auth()
@@ -11,41 +10,8 @@ export default async function DashboardPage() {
     redirect("/login")
   }
 
-  async function handleSignOut() {
-    "use server"
-    await signOut()
-  }
-
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white border-b">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between">
-            <Link href="/dashboard" className="flex items-center gap-2">
-              <BookOpen className="h-6 w-6 sm:h-8 sm:w-8 text-indigo-600" />
-              <span className="text-xl sm:text-2xl font-bold text-gray-900">Studydeck</span>
-            </Link>
-            <div className="flex items-center gap-2 sm:gap-4">
-              <span className="hidden sm:inline text-sm text-gray-600">
-                {session.user?.name || session.user?.email}
-              </span>
-              <form action={handleSignOut}>
-                <button
-                  type="submit"
-                  className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-                >
-                  <LogOut className="h-4 w-4" />
-                  <span className="hidden sm:inline">Sign out</span>
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+    <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">
             Welcome back, {session.user?.name}!
@@ -86,6 +52,5 @@ export default async function DashboardPage() {
           </Link>
         </div>
       </main>
-    </div>
   )
 }
