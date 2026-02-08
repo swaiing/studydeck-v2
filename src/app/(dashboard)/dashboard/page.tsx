@@ -23,20 +23,20 @@ export default async function DashboardPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             <Link href="/dashboard" className="flex items-center gap-2">
-              <BookOpen className="h-8 w-8 text-indigo-600" />
-              <span className="text-2xl font-bold text-gray-900">Studydeck</span>
+              <BookOpen className="h-6 w-6 sm:h-8 sm:w-8 text-indigo-600" />
+              <span className="text-xl sm:text-2xl font-bold text-gray-900">Studydeck</span>
             </Link>
-            <div className="flex items-center gap-4">
-              <span className="text-sm text-gray-600">
+            <div className="flex items-center gap-2 sm:gap-4">
+              <span className="hidden sm:inline text-sm text-gray-600">
                 {session.user?.name || session.user?.email}
               </span>
               <form action={handleSignOut}>
                 <button
                   type="submit"
-                  className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                  className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
                 >
                   <LogOut className="h-4 w-4" />
-                  Sign out
+                  <span className="hidden sm:inline">Sign out</span>
                 </button>
               </form>
             </div>
@@ -70,17 +70,17 @@ export default async function DashboardPage() {
         </div>
 
         {/* Empty State */}
-        <div className="bg-white rounded-2xl border border-gray-200 p-12 text-center">
-          <BookOpen className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-          <h2 className="text-2xl font-semibold text-gray-900 mb-2">
+        <div className="bg-white rounded-2xl border border-gray-200 p-6 sm:p-12 text-center">
+          <BookOpen className="h-12 w-12 sm:h-16 sm:w-16 text-gray-400 mx-auto mb-4" />
+          <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-2">
             No decks yet
           </h2>
-          <p className="text-gray-600 mb-6">
+          <p className="text-sm sm:text-base text-gray-600 mb-6">
             Create your first deck to start studying
           </p>
           <Link
             href="/decks/new"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition-colors"
+            className="inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition-colors text-sm sm:text-base"
           >
             Create your first deck
           </Link>

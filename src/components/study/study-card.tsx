@@ -28,7 +28,7 @@ export function StudyCard({
       {/* Flip Card Container */}
       <div
         className={cn(
-          "relative w-full h-[500px] cursor-pointer transition-transform duration-500 preserve-3d",
+          "relative w-full h-[400px] sm:h-[500px] cursor-pointer transition-transform duration-500 preserve-3d",
           isFlipped && "rotate-y-180"
         )}
         onClick={onFlip}
@@ -40,7 +40,7 @@ export function StudyCard({
         {/* Front of Card (Question) */}
         <Card
           className={cn(
-            "absolute inset-0 backface-hidden flex flex-col items-center justify-center p-12 bg-white border-2 shadow-2xl",
+            "absolute inset-0 backface-hidden flex flex-col items-center justify-center p-6 sm:p-8 md:p-12 bg-white border-2 shadow-2xl",
             !isFlipped ? "border-indigo-300" : "border-gray-200"
           )}
           style={{
@@ -48,14 +48,14 @@ export function StudyCard({
             WebkitBackfaceVisibility: "hidden",
           }}
         >
-          <div className="text-center space-y-6 w-full">
-            <div className="text-sm font-medium text-indigo-600 uppercase tracking-wide">
+          <div className="text-center space-y-4 sm:space-y-6 w-full">
+            <div className="text-xs sm:text-sm font-medium text-indigo-600 uppercase tracking-wide">
               Question
             </div>
-            <div className="text-2xl md:text-3xl font-semibold text-gray-900 whitespace-pre-wrap">
+            <div className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-900 whitespace-pre-wrap">
               {card.question}
             </div>
-            <div className="text-sm text-gray-500 mt-8">
+            <div className="text-xs sm:text-sm text-gray-500 mt-4 sm:mt-8">
               Click or press Space to reveal answer
             </div>
           </div>
@@ -64,7 +64,7 @@ export function StudyCard({
         {/* Back of Card (Answer) */}
         <Card
           className={cn(
-            "absolute inset-0 backface-hidden flex flex-col items-center justify-center p-12 bg-gradient-to-br from-indigo-50 to-purple-50 border-2 shadow-2xl",
+            "absolute inset-0 backface-hidden flex flex-col items-center justify-center p-6 sm:p-8 md:p-12 bg-gradient-to-br from-indigo-50 to-purple-50 border-2 shadow-2xl",
             isFlipped ? "border-indigo-300" : "border-gray-200"
           )}
           style={{
@@ -73,14 +73,14 @@ export function StudyCard({
             transform: "rotateY(180deg)",
           }}
         >
-          <div className="text-center space-y-6 w-full">
-            <div className="text-sm font-medium text-indigo-600 uppercase tracking-wide">
+          <div className="text-center space-y-4 sm:space-y-6 w-full">
+            <div className="text-xs sm:text-sm font-medium text-indigo-600 uppercase tracking-wide">
               Answer
             </div>
-            <div className="text-2xl md:text-3xl font-semibold text-gray-900 whitespace-pre-wrap">
+            <div className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-900 whitespace-pre-wrap">
               {card.answer}
             </div>
-            <div className="text-sm text-gray-500 mt-8">
+            <div className="text-xs sm:text-sm text-gray-500 mt-4 sm:mt-8">
               Click or press Space to go back
             </div>
           </div>

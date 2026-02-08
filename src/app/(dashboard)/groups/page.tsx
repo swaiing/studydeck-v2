@@ -20,18 +20,18 @@ export default async function GroupsPage() {
     <div className="min-h-screen bg-gray-50">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
           <div>
             <div className="flex items-center gap-3 mb-2">
-              <Users className="h-8 w-8 text-indigo-600" />
-              <h1 className="text-3xl font-bold text-gray-900">My Groups</h1>
+              <Users className="h-6 w-6 sm:h-8 sm:w-8 text-indigo-600" />
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">My Groups</h1>
             </div>
-            <p className="text-gray-600">
+            <p className="text-sm sm:text-base text-gray-600">
               Collaborate and share decks with study groups
             </p>
           </div>
           <CreateGroupDialog>
-            <Button className="gap-2">
+            <Button className="gap-2 w-full sm:w-auto sm:shrink-0">
               <Plus className="h-4 w-4" />
               Create Group
             </Button>
@@ -66,16 +66,16 @@ export default async function GroupsPage() {
             {result.error}
           </div>
         ) : groups.length === 0 ? (
-          <div className="bg-white rounded-2xl border border-gray-200 p-12 text-center">
-            <Users className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-            <h2 className="text-2xl font-semibold text-gray-900 mb-2">
+          <div className="bg-white rounded-2xl border border-gray-200 p-6 sm:p-12 text-center">
+            <Users className="h-12 w-12 sm:h-16 sm:w-16 text-gray-400 mx-auto mb-4" />
+            <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-2">
               No groups yet
             </h2>
-            <p className="text-gray-600 mb-6">
+            <p className="text-sm sm:text-base text-gray-600 mb-6">
               Create your first group to start collaborating
             </p>
             <CreateGroupDialog>
-              <Button className="gap-2">
+              <Button className="gap-2 w-full sm:w-auto">
                 <Plus className="h-4 w-4" />
                 Create your first group
               </Button>

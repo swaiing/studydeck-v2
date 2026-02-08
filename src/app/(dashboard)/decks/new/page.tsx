@@ -3,7 +3,6 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { createDeck } from "@/actions/deck-actions"
-import { DashboardLayout } from "@/components/layout/dashboard-layout"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -12,6 +11,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge"
 import { ArrowLeft, X } from "lucide-react"
 import Link from "next/link"
+
+// Disable prerendering for this client component page
+export const dynamic = "force-dynamic"
+export const runtime = "nodejs"
 
 export default function NewDeckPage() {
   const router = useRouter()

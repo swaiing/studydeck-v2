@@ -151,24 +151,25 @@ export function StudySession({ deck }: StudySessionProps) {
   return (
     <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
       {/* Header */}
-      <div className="max-w-4xl mx-auto mb-8">
+      <div className="max-w-4xl mx-auto mb-6 sm:mb-8">
         <Link
           href={`/decks/${deck.id}`}
-          className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 mb-4"
+          className="inline-flex items-center gap-2 text-xs sm:text-sm text-gray-600 hover:text-gray-900 mb-4"
         >
           <ArrowLeft className="h-4 w-4" />
-          Exit Study Session
+          <span className="hidden sm:inline">Exit Study Session</span>
+          <span className="sm:hidden">Exit</span>
         </Link>
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">{deck.name}</h1>
+        <div className="flex items-center justify-between gap-4">
+          <div className="min-w-0 flex-1">
+            <h1 className="text-lg sm:text-2xl font-bold text-gray-900 truncate">{deck.name}</h1>
             {deck.user && (
-              <p className="text-sm text-gray-600">by @{deck.user.username}</p>
+              <p className="text-xs sm:text-sm text-gray-600 truncate">by @{deck.user.username}</p>
             )}
           </div>
-          <div className="text-right">
-            <div className="text-sm text-gray-600">Progress</div>
-            <div className="text-2xl font-bold text-indigo-600">
+          <div className="text-right shrink-0">
+            <div className="text-xs sm:text-sm text-gray-600">Progress</div>
+            <div className="text-lg sm:text-2xl font-bold text-indigo-600">
               {currentIndex + 1} / {deck.cards.length}
             </div>
           </div>
@@ -218,15 +219,15 @@ export function StudySession({ deck }: StudySessionProps) {
       />
 
       {/* Keyboard Shortcuts Help */}
-      <div className="max-w-4xl mx-auto mt-8">
-        <div className="bg-white/50 backdrop-blur rounded-lg p-4 text-sm text-gray-600">
+      <div className="max-w-4xl mx-auto mt-6 sm:mt-8">
+        <div className="bg-white/50 backdrop-blur rounded-lg p-3 sm:p-4 text-xs sm:text-sm text-gray-600">
           <div className="font-medium mb-2">Keyboard Shortcuts:</div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-            <div><kbd className="px-2 py-1 bg-gray-100 rounded">Space</kbd> Flip card</div>
-            <div><kbd className="px-2 py-1 bg-gray-100 rounded">←</kbd> Incorrect</div>
-            <div><kbd className="px-2 py-1 bg-gray-100 rounded">→</kbd> Correct</div>
-            <div><kbd className="px-2 py-1 bg-gray-100 rounded">H</kbd> Add hint</div>
-            <div><kbd className="px-2 py-1 bg-gray-100 rounded">1-5</kbd> Rate difficulty</div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs sm:text-sm">
+            <div><kbd className="px-1.5 sm:px-2 py-1 bg-gray-100 rounded text-xs">Space</kbd> Flip card</div>
+            <div><kbd className="px-1.5 sm:px-2 py-1 bg-gray-100 rounded text-xs">←</kbd> Incorrect</div>
+            <div><kbd className="px-1.5 sm:px-2 py-1 bg-gray-100 rounded text-xs">→</kbd> Correct</div>
+            <div><kbd className="px-1.5 sm:px-2 py-1 bg-gray-100 rounded text-xs">H</kbd> Add hint</div>
+            <div><kbd className="px-1.5 sm:px-2 py-1 bg-gray-100 rounded text-xs">1-5</kbd> Rate difficulty</div>
           </div>
         </div>
       </div>

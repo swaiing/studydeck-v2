@@ -52,15 +52,15 @@ export function DiscoverSearch({ initialQuery, initialTags, initialSortBy }: Dis
   }
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 p-6">
+    <div className="bg-white rounded-lg border border-gray-200 p-4 sm:p-6">
       <form onSubmit={handleSearch} className="space-y-4">
         {/* Search Input */}
-        <div className="flex gap-3">
+        <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
             <Input
               type="text"
-              placeholder="Search decks by name or description..."
+              placeholder="Search decks..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               className="pl-10 pr-10"
@@ -75,16 +75,16 @@ export function DiscoverSearch({ initialQuery, initialTags, initialSortBy }: Dis
               </button>
             )}
           </div>
-          <Button type="submit" disabled={isPending}>
+          <Button type="submit" disabled={isPending} className="w-full sm:w-auto">
             Search
           </Button>
         </div>
 
         {/* Sort Options */}
-        <div className="flex items-center gap-3">
-          <label className="text-sm font-medium text-gray-700">Sort by:</label>
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+          <label className="text-sm font-medium text-gray-700 shrink-0">Sort by:</label>
           <Select value={sortBy} onValueChange={handleSortChange}>
-            <SelectTrigger className="w-[200px]">
+            <SelectTrigger className="w-full sm:w-[200px]">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>

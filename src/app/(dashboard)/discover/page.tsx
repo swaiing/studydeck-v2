@@ -40,11 +40,11 @@ export default async function DiscoverPage({ searchParams }: DiscoverPageProps) 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
         {/* Header */}
         <div className="mb-8">
-          <div className="flex items-center gap-3 mb-2">
-            <Compass className="h-8 w-8 text-indigo-600" />
-            <h1 className="text-3xl font-bold text-gray-900">Discover Decks</h1>
+          <div className="flex items-center gap-2 sm:gap-3 mb-2">
+            <Compass className="h-6 w-6 sm:h-8 sm:w-8 text-indigo-600" />
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Discover Decks</h1>
           </div>
-          <p className="text-gray-600">
+          <p className="text-sm sm:text-base text-gray-600">
             Browse and study from {total.toLocaleString()} public flashcard decks
           </p>
         </div>

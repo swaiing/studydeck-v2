@@ -28,15 +28,15 @@ export default async function DecksPage() {
     <div className="min-h-screen bg-gray-50">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">My Decks</h1>
-            <p className="text-gray-600 mt-2">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">My Decks</h1>
+            <p className="text-sm sm:text-base text-gray-600 mt-2">
               Manage your flashcard decks and start studying
             </p>
           </div>
-          <Link href="/decks/new">
-            <Button className="gap-2">
+          <Link href="/decks/new" className="sm:shrink-0">
+            <Button className="gap-2 w-full sm:w-auto">
               <Plus className="h-4 w-4" />
               Create Deck
             </Button>
@@ -73,12 +73,12 @@ export default async function DecksPage() {
 
         {/* Decks List */}
         {allDecks.length === 0 ? (
-          <Card className="p-12 text-center">
-            <BookOpen className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-            <h2 className="text-2xl font-semibold text-gray-900 mb-2">No decks yet</h2>
-            <p className="text-gray-600 mb-6">Create your first deck to start studying</p>
+          <Card className="p-6 sm:p-12 text-center">
+            <BookOpen className="h-12 w-12 sm:h-16 sm:w-16 text-gray-400 mx-auto mb-4" />
+            <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-2">No decks yet</h2>
+            <p className="text-sm sm:text-base text-gray-600 mb-6">Create your first deck to start studying</p>
             <Link href="/decks/new">
-              <Button className="gap-2">
+              <Button className="gap-2 w-full sm:w-auto">
                 <Plus className="h-4 w-4" />
                 Create your first deck
               </Button>
