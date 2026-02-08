@@ -41,17 +41,14 @@ export function DiscoverCard({ deck, isLoggedIn = true }: DiscoverCardProps) {
     <Card className="hover:shadow-lg transition-shadow flex flex-col h-full">
       <CardHeader>
         <div className="flex items-start justify-between gap-2 mb-2">
-          {isLoggedIn ? (
-            <Link href={`/decks/${deck.id}`} className="flex-1 min-w-0">
-              <CardTitle className="text-lg line-clamp-2 hover:text-indigo-600 transition-colors">
-                {deck.name}
-              </CardTitle>
-            </Link>
-          ) : (
-            <CardTitle className="text-lg line-clamp-2 flex-1 min-w-0">
+          <Link
+            href={isLoggedIn ? `/decks/${deck.id}` : `/login?redirect=/decks/${deck.id}`}
+            className="flex-1 min-w-0"
+          >
+            <CardTitle className="text-lg line-clamp-2 hover:text-indigo-600 transition-colors">
               {deck.name}
             </CardTitle>
-          )}
+          </Link>
           {isLoggedIn && !deck.isOwner && (
             <Button
               size="sm"
@@ -118,17 +115,6 @@ export function DiscoverCard({ deck, isLoggedIn = true }: DiscoverCardProps) {
                 +{deck.tags.length - 3}
               </Badge>
             )}
-          </div>
-        )}
-
-        {/* Sign up CTA for logged out users */}
-        {!isLoggedIn && (
-          <div className="mt-4 pt-4 border-t">
-            <Link href="/signup">
-              <Button className="w-full">
-                Sign up to study
-              </Button>
-            </Link>
           </div>
         )}
       </CardContent>

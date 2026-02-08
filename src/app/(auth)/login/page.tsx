@@ -1,13 +1,15 @@
 "use client"
 
-import { useState } from "react"
+import { Suspense, useState } from "react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { BookOpen } from "lucide-react"
 import { signIn } from "next-auth/react"
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const redirect = searchParams.get("redirect")
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
 
@@ -33,7 +35,7 @@ export default function LoginPage() {
         return
       }
 
-      router.push("/dashboard")
+      router.push(redirect || "/dashboard")
       router.refresh()
     } catch (err) {
       setError("An unexpected error occurred")
@@ -111,12 +113,30 @@ export default function LoginPage() {
 
           <p className="mt-6 text-center text-sm text-gray-600">
             Don't have an account?{" "}
-            <Link href="/signup" className="font-medium text-indigo-600 hover:text-indigo-700">
+            <Link
+              href={redirect ? `/signup?redirect=${encodeURIComponent(redirect)}` : "/signup"}
+              className="font-medium text-indigo-600 hover:text-indigo-700"
+            >
               Sign up
             </Link>
           </p>
         </div>
       </div>
     </div>
+  )
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-white to-gray-50">
+        <div className="flex items-center gap-2">
+          <BookOpen className="h-8 w-8 text-indigo-600 animate-pulse" />
+          <span className="text-2xl font-bold text-gray-900">Loading...</span>
+        </div>
+      </div>
+    }>
+      <LoginForm />
+    </Suspense>
   )
 }
