@@ -1,0 +1,34 @@
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
+import { FileQuestion, Home, ArrowLeft } from 'lucide-react'
+
+export default function NotFound() {
+  return (
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+      <Card className="max-w-md w-full p-8 text-center">
+        <FileQuestion className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">Page Not Found</h2>
+        <p className="text-gray-600 mb-6">
+          Sorry, we couldn't find the page you're looking for. It might have been moved or deleted.
+        </p>
+        <div className="space-y-3">
+          <Link href="/dashboard" className="block">
+            <Button className="w-full gap-2">
+              <Home className="h-4 w-4" />
+              Go to Dashboard
+            </Button>
+          </Link>
+          <Button
+            variant="outline"
+            onClick={() => window.history.back()}
+            className="w-full gap-2"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Go Back
+          </Button>
+        </div>
+      </Card>
+    </div>
+  )
+}
